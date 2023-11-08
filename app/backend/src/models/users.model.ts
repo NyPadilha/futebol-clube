@@ -7,4 +7,8 @@ export default class UserModel {
   public async login(email: string): Promise<IUser | null> {
     return this.model.findOne({ where: { email } });
   }
+
+  public async getRole(email: string): Promise<IUser | null> {
+    return this.model.findOne({ where: { email } });
+  }
 }

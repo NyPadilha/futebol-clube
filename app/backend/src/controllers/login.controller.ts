@@ -11,4 +11,11 @@ export default class LoginController {
     const { status, data } = await this.loginService.login(email, password);
     res.status(status).json(data);
   }
+
+  public async getRole(req: Request, res: Response) {
+    const { authorization } = req.headers as { authorization: string };
+    const token = authorization.split(' ')[1];
+    const { status, data } = await this.loginService.getRole(token);
+    res.status(status).json(data);
+  }
 }
