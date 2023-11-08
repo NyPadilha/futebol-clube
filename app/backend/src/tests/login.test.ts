@@ -9,7 +9,6 @@ import SequelizeUser from '../database/models/SequelizeUser';
 import {
     returnUser,
 } from './mocks/user.mock';
-import exp from 'constants';
 
 use(chaiHttp);
 
