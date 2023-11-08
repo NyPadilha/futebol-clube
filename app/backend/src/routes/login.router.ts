@@ -15,8 +15,7 @@ router.post(
 );
 router.get(
   '/role',
-  tokenValidations.field,
-  tokenValidations.validToken,
+  tokenValidations.validate,
   (req: Request, res: Response) => loginController.getRole(req, res),
 );
 
