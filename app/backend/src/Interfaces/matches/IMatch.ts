@@ -6,3 +6,5 @@ export interface IMatch {
   awayTeamGoals: number,
   inProgress: boolean,
 }
+
+export type MatchStatus = { inProgress?: boolean };

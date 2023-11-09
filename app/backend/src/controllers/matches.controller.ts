@@ -6,14 +6,16 @@ export default class MatchesController {
     private matchService = new MatchService(),
   ) {}
 
-  public async getMatches(_req: Request, res: Response) {
-    const { status, data } = await this.matchService.getMatches();
+  public async getMatches(req: Request, res: Response) {
+    const { inProgress } = req.query;
+    const matchStatus = inProgress ? { inProgress: inProgress === 'true' } : {};
+    const { status, data } = await this.matchService.getMatches(matchStatus);
     res.status(status).json(data);
   }
 
-  public async getMatchById(req: Request, res: Response) {
-    const { id } = req.params;
-    const { status, data } = await this.matchService.getMatchById(id);
-    res.status(status).json(data);
-  }
+//   public async getMatchById(req: Request, res: Response) {
+//     const { id } = req.params;
+//     const { status, data } = await this.matchService.getMatchById(id);
+//     res.status(status).json(data);
+//   }
 }
