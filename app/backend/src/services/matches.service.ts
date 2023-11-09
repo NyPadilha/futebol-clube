@@ -12,8 +12,32 @@ export default class MatchService {
     return { status: 200, data: matches };
   }
 
-//   public async getMatchById(id: string): Promise<ServiceResponse<IMatch | null>> {
-//     const match = await this.matchModel.getMatchById(id);
-//     return { status: 200, data: match };
-//   }
+  public async finishMatch(id: number): Promise<ServiceResponse<void>> {
+    await this.matchModel.finishMatch(id);
+    return { status: 200, data: { message: 'Finished' } };
+  }
+
+  public async updateMatch(
+    id: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<ServiceResponse<void>> {
+    await this.matchModel.updateMatch(id, homeTeamGoals, awayTeamGoals);
+    return { status: 200, data: { message: 'Updated' } };
+  }
+
+  public async createMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<ServiceResponse<IMatch>> {
+    const match = await this.matchModel.createMatch(
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+    );
+    return { status: 201, data: match };
+  }
 }

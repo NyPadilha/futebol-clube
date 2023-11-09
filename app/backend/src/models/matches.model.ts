@@ -15,6 +15,33 @@ export default class MatchModel {
     });
   }
 
+  public async finishMatch(id: number): Promise<void> {
+    await this.model.update({ inProgress: false }, { where: { id } });
+  }
+
+  public async updateMatch(
+    id: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<void> {
+    await this.model.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+  }
+
+  public async createMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<IMatch> {
+    return this.model.create({
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+      inProgress: true,
+    });
+  }
+
   // public async getMatchById(id: string): Promise<IMatch | null> {
   //   return this.model.findByPk(id);
   // }
