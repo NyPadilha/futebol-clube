@@ -7,5 +7,5 @@ export interface IUser {
 }
 
 export interface IRole {
-  role: string,
+  role: string | null,
 }

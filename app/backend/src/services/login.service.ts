@@ -1,20 +1,8 @@
 import { compareSync } from 'bcryptjs';
-import { sign, verify } from 'jsonwebtoken';
 import UserModel from '../models/users.model';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
 import { IRole } from '../Interfaces/users/IUser';
-
-const generateToken = (email: string): string =>
-  sign({ email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
-
-export const verifyToken = (token: string): string | null => {
-  try {
-    const { email } = verify(token, process.env.JWT_SECRET || 'secret') as { email: string };
-    return email;
-  } catch (err) {
-    return null;
-  }
-};
+import { generateToken, verifyToken } from '../utils/jwt.utils';
 
 export default class LoginService {
   constructor(
@@ -39,10 +27,6 @@ export default class LoginService {
 
     const user = await this.userModel.getRole(email);
 
-    if (!user) {
-      return { status: 401, data: { message: 'User not found' } };
-    }
-
-    return { status: 200, data: { role: user.role } };
+    return { status: 200, data: { role: user?.role || null } };
   }
 }
