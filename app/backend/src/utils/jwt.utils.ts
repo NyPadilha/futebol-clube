@@ -1,7 +1,7 @@
 import { sign, verify } from 'jsonwebtoken';
 
 export const generateToken = (email: string): string =>
-  sign({ email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
+  sign({ email }, process.env.JWT_SECRET || 'secret', { expiresIn: '12h' });
 
 export const verifyToken = (token: string): string | null => {
   try {

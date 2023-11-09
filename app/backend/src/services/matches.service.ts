@@ -1,6 +1,7 @@
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
 import { IMatch, MatchStatus } from '../Interfaces/matches/IMatch';
 import MatchModel from '../models/matches.model';
+import TeamModel from '../models/teams.model';
 
 export default class MatchService {
   constructor(
@@ -32,6 +33,13 @@ export default class MatchService {
     homeTeamGoals: number,
     awayTeamGoals: number,
   ): Promise<ServiceResponse<IMatch>> {
+    const homeTeamExists = await new TeamModel().getTeamById(homeTeamId);
+    const awayTeamExists = await new TeamModel().getTeamById(awayTeamId);
+
+    if (!homeTeamExists || !awayTeamExists) {
+      return { status: 404, data: { message: 'There is no team with such id!' } };
+    }
+
     const match = await this.matchModel.createMatch(
       homeTeamId,
       awayTeamId,
